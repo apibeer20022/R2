@@ -612,10 +612,10 @@
                     `;
 
                     choiceBtn.onclick = () => {
-                        if (isExamSubmitted) return; 
-                        userAnswers[item.id] = choiceNum;
-                        renderQuiz();
-                    };
+    if (isExamSubmitted) return; 
+    userAnswers[item.id] = choiceNum;
+    renderQuiz(); // <-- 🛑 ตรงนี้ผิดครับ! มันเรียกฟังก์ชันที่ไม่มีอยู่จริงหน้าเว็บเลยพัง
+};
                     choicesGroup.appendChild(choiceBtn);
                 });
 
