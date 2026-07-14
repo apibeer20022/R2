@@ -524,7 +524,11 @@
             const container = document.getElementById('quizContainer');
             container.innerHTML = '';
             
-            document.getElementById('questionCount').innerText = currentQuizData.length;
+            // 🔥 แก้ไขตรงนี้: เพิ่มการเช็กก่อนว่ามีไอดีนี้อยู่จริงไหม ถ้ามีค่อยอัปเดตตัวเลข
+            const qCountElem = document.getElementById('questionCount');
+            if (qCountElem) {
+                qCountElem.innerText = currentQuizData.length;
+            }
 
             currentQuizData.forEach((item, qIdx) => {
                 const qDiv = document.createElement('div');
