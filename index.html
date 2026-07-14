@@ -397,9 +397,10 @@
             });
         }
 
-        // ⏳ เปิด-ปิดโหมดฝึกทำข้อสอบจับเวลา
+       // ⏳ เปิด-ปิดโหมดฝึกทำข้อสอบจับเวลา (เวอร์ชันแก้ไขบั๊กข้อสอบหาย)
         function toggleExamMode() {
             if (!isExamMode) {
+                // ดึงและกรองข้อมูลให้ชัวร์ก่อนว่ามีข้อสอบ
                 let filtered = originalQuizData.filter(item => item.year === selectedFilter);
                 currentQuizData = JSON.parse(JSON.stringify(filtered));
                 
@@ -414,10 +415,16 @@
                     randomizeCurrentData();
                 }
 
-                if (confirm(`คุณเบียร์ต้องการเริ่มทำข้อสอบจับเวลาชุดปี ${selectedFilter} ใช่ไหมครับ?\nระบบกำหนดเวลาให้ข้อละ 1 นาที (รวม ${currentQuizData.length} นาที) เมื่อทำครบกรุณากดปุ่มส่งข้อสอบท้ายหน้าเพื่อประเมินผลครับ`)) {
+                if (currentQuizData.length === 0) {
+                    alert("⚠️ ไม่พบข้อมูลข้อสอบในชุดปีที่เลือก ไม่สามารถเริ่มโหมดจับเวลาได้");
+                    return;
+                }
+
+                if (confirm(`คุณเบียร์ต้องการเริ่มทำข้อสอบจับเวลาชุดปี ${selectedFilter} ใช่ไหมครับ?\nระบบกำหนดเวลาให้ข้อละ 1 นาที (รวม ${currentQuizData.length} นาที) เมื่อทำครบกรุณากดปุ่มส่งข้อสอบท้ายหน้าเพื่อประเมินผลครับ ⏱️`)) {
                     isExamMode = true;
                     isExamSubmitted = false;
-                    userAnswers = {};
+                    userAnswers = {}; // ล้างคำตอบเก่า
+                    
                     document.getElementById('resultCard').classList.add('hidden');
                     document.getElementById('submitArea').classList.remove('hidden');
                     document.getElementById('timerDashboard').classList.remove('hidden');
@@ -440,6 +447,7 @@
                         }
                     }, 1000);
 
+                    // มั่นใจได้ว่ามีข้อมูลแน่นอนก่อนวาดหน้าจอ
                     renderQuestions(); 
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
