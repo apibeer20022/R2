@@ -375,9 +375,10 @@ function filterAndRender() {
         }
 
         // แก้ไขฟังก์ชันโครงสร้างจับเวลาตรงนี้ครับคุณเบียร์
+      // ✅ ฟังก์ชันควบคุมโหมดจับเวลาสอบที่ถูกต้องและสมบูรณ์แบบที่สุดครับคุณเบียร์
         function toggleExamMode() {
             if (!isExamMode) {
-                // ก่อนเริ่มสอบ ให้ดึงข้อมูลมาใส่ใน currentQuizData ให้ชัวร์ก่อน
+                // ดึงข้อมูลมากรองให้มั่นใจก่อนเริ่มสับเวลาเพื่อป้องกันข้อสอบหาย
                 let filtered = originalQuizData.filter(item => item.year === selectedFilter);
                 currentQuizData = JSON.parse(JSON.stringify(filtered));
                 
@@ -404,7 +405,7 @@ function filterAndRender() {
                     document.getElementById('btnExamMode').className = "bg-slate-700 hover:bg-slate-800 text-white px-4 py-1.5 rounded-lg text-sm font-medium transition duration-200 flex items-center gap-2 shadow-sm";
                     document.getElementById('infoText').innerHTML = `<i class="fa-solid fa-stopwatch text-rose-500 mr-1"></i> โหมดจับเวลา: ตัวเลือกจะไฮไลต์เป็นสีฟ้าอ่อนเพื่อล็อกคำตอบ และจะเปิดแถบเฉลยตรวจทานคำตอบทั้งหมดพร้อมกันหลังกดส่งข้อสอบครับ`;
 
-                    remainingTime = currentQuizData.length * 60; // คำนวณเวลาจากจำนวนข้อจริง
+                    remainingTime = currentQuizData.length * 60; // คำนวณเวลาสัมพันธ์กับข้อสอบจริง
                     updateClock();
 
                     clearInterval(examTimer);
@@ -418,7 +419,7 @@ function filterAndRender() {
                         }
                     }, 1000);
 
-                    renderQuiz(); // วาดข้อสอบขึ้นหน้าจอทันที
+                    renderQuiz(); // วาดข้อสอบขึ้นหน้าจอทันที ไม่หายแน่นอนครับ
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             } else {
@@ -427,46 +428,6 @@ function filterAndRender() {
                 }
             }
         }
-
-        // ⏳ เปิด-ปิดโหมดฝึกทำข้อสอบจับเวลา
-        function toggleExamMode() {
-            if (!isExamMode) {
-                if (confirm(`คุณเบียร์ต้องการเริ่มทำข้อสอบจับเวลาชุดปี ${selectedFilter} ใช่ไหมครับ?\nระบบกำหนดเวลาให้ข้อละ 1 นาที (รวม ${currentQuizData.length} นาที) เมื่อทำครบกรุณากดปุ่มส่งข้อสอบท้ายหน้าเพื่อประเมินผลครับ`)) {
-                    isExamMode = true;
-                    isExamSubmitted = false;
-                    userAnswers = {};
-                    document.getElementById('resultCard').classList.add('hidden');
-                    document.getElementById('submitArea').classList.remove('hidden');
-                    document.getElementById('timerDashboard').classList.remove('hidden');
-
-                    document.getElementById('btnExamMode').innerHTML = `<i class="fa-solid fa-circle-stop"></i> ออกจากโหมดจับเวลา`;
-                    document.getElementById('btnExamMode').className = "bg-slate-700 hover:bg-slate-800 text-white px-4 py-1.5 rounded-lg text-sm font-medium transition duration-200 flex items-center gap-2 shadow-sm";
-                    document.getElementById('infoText').innerHTML = `<i class="fa-solid fa-stopwatch text-rose-500 mr-1"></i> โหมดจับเวลา: ตัวเลือกจะไฮไลต์เป็นสีฟ้าอ่อนเพื่อล็อกคำตอบ และจะเปิดแถบเฉลยตรวจทานคำตอบทั้งหมดพร้อมกันหลังกดส่งข้อสอบครับ`;
-
-                    remainingTime = currentQuizData.length * 60; // 60 วินาทีต่อข้อ
-                    updateClock();
-
-                    clearInterval(examTimer);
-                    examTimer = setInterval(() => {
-                        remainingTime--;
-                        updateClock();
-                        if (remainingTime <= 0) {
-                            clearInterval(examTimer);
-                            alert("⏰ หมดเวลาทำข้อสอบแล้ว! ระบบจะจัดส่งกระดาษคำตอบและเฉลยให้โดยอัตโนมัติครับ");
-                            processScore();
-                        }
-                    }, 1000);
-
-                    renderQuiz();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-            } else {
-                if (confirm("คุณเบียร์ต้องการยกเลิกโหมดจับเวลาและกลับสู่โหมดปกติใช่ไหม? (ผลคะแนนปัจจุบันจะถูกล้าง)")) {
-                    exitExamMode();
-                }
-            }
-        }
-
         function updateClock() {
             const min = Math.floor(remainingTime / 60);
             const sec = remainingTime % 60;
