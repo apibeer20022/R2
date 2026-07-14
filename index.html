@@ -517,115 +517,104 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function renderQuiz() {
-            const container = document.getElementById('quizContainer');
-            container.innerHTML = '';
-            
-            document.getElementById('questionCount').innerText = currentQuizData.length;
+        // 🎨 ฟังก์ชันวาดข้อสอบขึ้นหน้าจอ (เวอร์ชันแก้ไขจุดบั๊กตอนกดเลือกช้อยส์แล้วครับคุณเบียร์)
+        function renderQuestions() {
+            const container = document.getElementById("questions-container");
+            container.innerHTML = "";
+            const list = currentQuizData;
 
-            currentQuizData.forEach((item, qIdx) => {
-                const qDiv = document.createElement('div');
-                qDiv.className = "bg-white border border-slate-200 rounded-xl p-5 shadow-sm transition hover:shadow-md relative overflow-hidden";
-                qDiv.id = `q-box-${item.id}`;
+            list.forEach((item, index) => {
+                const card = document.createElement("div");
+                card.className = "bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col gap-4 relative";
+                card.id = `q-card-${item.id}`;
 
-                const badgeColor = item.year === '2566' ? 'bg-emerald-100 text-emerald-800 border-emerald-200' : 
-                                   item.year === '2565' ? 'bg-amber-100 text-amber-800 border-amber-200' : 'bg-blue-100 text-blue-800 border-blue-200';
+                const chosenAns = userAnswers[item.id];
+                const hasAnswered = chosenAns !== undefined;
 
-                let imgTag = '';
-                if (item.img && item.img.trim() !== '') {
-                    imgTag = `
-                        <div class="my-4 text-center">
-                            <img src="${item.img}" alt="รูปภาพประกอบข้อสอบข้อที่ ${qIdx+1}" class="max-h-64 mx-auto rounded-lg shadow-sm border border-slate-200 object-contain max-w-full">
-                        </div>`;
-                }
+                const header = document.createElement("div");
+                header.className = "flex justify-between items-start gap-4";
+                header.innerHTML = `<h3 class="font-semibold text-slate-900 leading-relaxed"><span class="text-indigo-600">ข้อที่ ${index + 1}:</span> ${item.q}</h3>`;
+                
+                const editBtn = document.createElement("button");
+                editBtn.className = "px-3 py-1 bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs font-semibold rounded-lg transition shrink-0";
+                editBtn.innerText = "✏️ แก้ไขเฉลย";
+                editBtn.onclick = () => enableEditMode(item.id, card, item.ans);
+                header.appendChild(editBtn);
+                card.appendChild(header);
 
-                let cloudUpdateBlock = '';
-                if (item.updatedBy) {
-                    cloudUpdateBlock = `
-                        <div class="mt-3 text-xs font-semibold text-sky-600 bg-sky-50 py-1 px-2.5 rounded inline-flex items-center gap-1.5 border border-sky-100">
-                            <i class="fa-solid fa-cloud shadow-sm"></i> คลาวด์อัปเดตเฉลยโดย: คุณ ${item.updatedBy}
-                        </div>`;
-                }
+                const choicesContainer = document.createElement("div");
+                choicesContainer.className = "grid grid-cols-1 gap-2";
 
-                qDiv.innerHTML = `
-                    <div class="flex justify-between items-start gap-2 mb-3">
-                        <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold border ${badgeColor}">
-                            ปี ${item.year}
-                        </span>
-                        <button onclick="openEditModal('${item.id}')" class="text-xs text-slate-400 hover:text-sky-600 transition flex items-center gap-1 bg-slate-50 hover:bg-slate-100 border border-slate-200 py-1 px-2 rounded-lg shadow-2xs">
-                            <i class="fa-solid fa-pen-to-square"></i> แก้ไขเฉลยต้นฉบับ
-                        </button>
-                    </div>
-                    <div class="text-base font-bold text-slate-800 leading-relaxed mb-3">
-                        ข้อที่ ${qIdx + 1}. ${item.q}
-                    </div>
-                    ${imgTag}
-                    <div class="space-y-2 mt-2" id="choices-group-${item.id}"></div>
-                    <div id="explanation-space-${item.id}" class="mt-3"></div>
-                    ${cloudUpdateBlock}
-                `;
-
-                container.appendChild(qDiv);
-
-                const choicesGroup = document.getElementById(`choices-group-${item.id}`);
-                const selectedAns = userAnswers[item.id];
-
-                item.choices.forEach((choiceText, cIdx) => {
-                    const choiceNum = cIdx + 1;
-                    const choiceBtn = document.createElement('button');
-                    choiceBtn.className = "w-full text-left px-4 py-2.5 rounded-lg border text-sm font-medium transition duration-150 flex items-start gap-3 focus:outline-none ";
+                item.choices.forEach((choice, cIndex) => {
+                    const choiceNum = cIndex + 1;
+                    const choiceBtn = document.createElement("button");
+                    choiceBtn.id = `btn-${item.id}-${choiceNum}`;
                     
+                    const isCorrectSolution = choiceNum === item.ans;
+                    const isUserSelection = choiceNum === chosenAns;
+                    
+                    let borderStyle = "border-slate-200 hover:bg-slate-50 text-slate-700 bg-white font-normal";
+
                     if (isExamMode && !isExamSubmitted) {
+                        // ระหว่างทำโหมดสอบจับเวลา: ไฮไลต์สีฟ้าอ่อนปุ่มที่กดเลือก
                         if (choiceNum === selectedAns) {
-                            choiceBtn.className += "border-blue-500 bg-blue-50 text-blue-900 font-semibold ring-1 ring-blue-500";
-                        } else {
-                            choiceBtn.className += "border-slate-200 bg-white text-slate-700 hover:bg-slate-50";
+                            borderStyle = "border-2 border-blue-500 bg-blue-50 font-medium ring-1 ring-blue-500";
                         }
                     } else {
-                        if (selectedAns !== undefined) {
-                            if (choiceNum === item.ans) {
-                                choiceBtn.className += "border-emerald-500 bg-emerald-50 text-emerald-900 ring-1 ring-emerald-500 font-semibold";
-                            } else if (choiceNum === selectedAns && selectedAns !== item.ans) {
-                                choiceBtn.className += "border-red-400 bg-red-50 text-red-900 ring-1 ring-red-400 font-semibold";
+                        // โหมดปกติ หรือ โหมดสอบที่กดส่งคำตอบแล้ว
+                        if (hasAnswered) {
+                            if (isCorrectSolution) {
+                                borderStyle = "border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-semibold ring-1 ring-emerald-500";
+                            } else if (isUserSelection && !isCorrectSolution) {
+                                borderStyle = "border-2 border-rose-500 bg-rose-50 text-rose-900 font-semibold ring-1 ring-rose-500";
                             } else {
-                                choiceBtn.className += "border-slate-200 bg-white text-slate-500 opacity-60";
+                                borderStyle = "border-slate-200 text-slate-400 opacity-60 bg-white pointer-events-auto";
                             }
-                        } else {
-                            choiceBtn.className += "border-slate-200 bg-white hover:bg-slate-50 text-slate-700 hover:border-slate-300";
                         }
                     }
 
+                    // ปรับสีดัชนีตัวเลขหน้าข้อสอบ
                     let badgeNumberStyle = "bg-slate-100 text-slate-600";
                     if (isExamMode && !isExamSubmitted) {
-                        if (choiceNum === selectedAns) badgeNumberStyle = "bg-blue-500 text-white";
-                    } else if (selectedAns !== undefined) {
+                        if (choiceNum === chosenAns) badgeNumberStyle = "bg-blue-500 text-white";
+                    } else if (hasAnswered) {
                         if (choiceNum === item.ans) badgeNumberStyle = "bg-emerald-500 text-white";
-                        else if (choiceNum === selectedAns && selectedAns !== item.ans) badgeNumberStyle = "bg-red-500 text-white";
+                        else if (choiceNum === chosenAns && chosenAns !== item.ans) badgeNumberStyle = "bg-red-500 text-white";
                         else badgeNumberStyle = "bg-slate-100 text-slate-400";
                     }
 
+                    choiceBtn.className = `text-left px-4 py-3 rounded-xl border transition text-sm flex items-start gap-3 ${borderStyle}`;
                     choiceBtn.innerHTML = `
                         <span class="inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold shrink-0 mt-0.5 ${badgeNumberStyle}">
                             ${choiceNum}
                         </span>
-                        <span class="break-words">${choiceText}</span>
+                        <span class="break-words">${choice}</span>
                     `;
-
+                    
                     choiceBtn.onclick = () => {
-    if (isExamSubmitted) return; 
-    userAnswers[item.id] = choiceNum;
-    renderQuiz(); // <-- 🛑 ตรงนี้ผิดครับ! มันเรียกฟังก์ชันที่ไม่มีอยู่จริงหน้าเว็บเลยพัง
-};
-                    choicesGroup.appendChild(choiceBtn);
+                        if (isExamSubmitted) return; // ล็อกห้ามกดเมื่อส่งตรวจกระดาษสอบแล้ว
+                        userAnswers[item.id] = choiceNum;
+                        renderQuestions(); // ✨ อัปเดตตรงนี้ให้เรียก renderQuestions คืนค่าหน้าจอให้ถูกต้องครับ!
+                    };
+                    choicesContainer.appendChild(choiceBtn);
                 });
 
-                if ((!isExamMode && selectedAns !== undefined) || (isExamMode && isExamSubmitted)) {
-                    const explanationSpace = document.getElementById(`explanation-space-${item.id}`);
-                    explanationSpace.innerHTML = `
-                        <div class="bg-blue-50 text-blue-800 text-xs font-bold py-2 px-3 rounded-lg border border-blue-200 inline-block shadow-2xs">
-                            💡 เฉลยคือข้อ ${item.ans}
-                        </div>`;
+                card.appendChild(choicesContainer);
+
+                // แสดงกล่องข้อความเฉลยคำตอบ
+                const answerFeedback = document.createElement("div");
+                answerFeedback.id = `feedback-${item.id}`;
+                
+                if ((!isExamMode && hasAnswered) || (isExamMode && isExamSubmitted)) {
+                    const isCorrect = chosenAns === item.ans;
+                    answerFeedback.className = `p-3 rounded-xl text-sm font-medium mt-2 ${isCorrect ? 'bg-emerald-50 text-emerald-800' : 'bg-rose-50 text-rose-800'}`;
+                    answerFeedback.innerHTML = isCorrect ? `🎉 ถูกต้อง! เฉลยคือข้อที่ <b>${item.ans}</b>` : `❌ ยังไม่ถูก! คำตอบที่ถูกคือข้อที่ <b>${item.ans}</b>`;
+                } else {
+                    answerFeedback.className = "hidden p-3 rounded-xl text-sm font-medium mt-2";
                 }
+                card.appendChild(answerFeedback);
+
+                container.appendChild(card);
             });
         }
 
