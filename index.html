@@ -4,13 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ระบบคลังข้อสอบวิชารังสีเทคนิค 2</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Sarabun -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght=300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -21,7 +18,6 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col pb-24">
 
-    <!-- Header Section -->
     <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-md sticky top-0 z-40">
         <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-3">
@@ -33,7 +29,6 @@
                     <p class="text-xs text-blue-100 opacity-90">ระบบฝึกฝนความรู้เพื่อการสอบขึ้นทะเบียนใบอนุญาตฯ</p>
                 </div>
             </div>
-            <!-- Exam Selector -->
             <div class="flex flex-wrap gap-2 items-center">
                 <span class="text-sm text-blue-100 hidden md:inline"><i class="fa-solid fa-list-check mr-1"></i> ชุดข้อสอบ:</span>
                 <select id="setSelector" class="bg-white text-slate-800 px-3 py-1.5 rounded-lg text-sm font-medium border border-blue-400 focus:outline-none focus:ring-2 focus:ring-indigo-300">
@@ -45,7 +40,6 @@
         </div>
     </header>
 
-    <!-- ⏱️ Sticky Timer Dashboard (แถบจับเวลาถอยหลังแบบตรึงหน้าจอ) -->
     <div id="timerDashboard" class="bg-amber-500 text-white sticky top-[73px] sm:top-[77px] z-30 shadow-sm hidden transition-all">
         <div class="max-w-5xl mx-auto px-4 py-2.5 flex justify-between items-center font-bold text-sm sm:text-base">
             <div class="flex items-center gap-2">
@@ -57,7 +51,6 @@
         </div>
     </div>
 
-    <!-- Toolbar Section -->
     <div id="toolbarSection" class="bg-white border-b border-slate-200 py-3 px-4 shadow-sm sticky top-[73px] sm:top-[77px] z-20">
         <div class="max-w-5xl mx-auto flex flex-wrap justify-between items-center gap-3">
             <div id="infoText" class="text-sm font-medium text-slate-600">
@@ -77,10 +70,8 @@
         </div>
     </div>
 
-    <!-- Main Content -->
     <main class="flex-grow max-w-5xl w-full mx-auto px-4 py-6">
-        <!-- 🏆 Score Card Display -->
-        <div id="resultCard" class="bg-emerald-50 border border-emerald-200 rounded-xl p-6 mb-6 text-center hidden transition-all animate-fade-in">
+        <div id="resultCard" class="bg-emerald-50 border border-emerald-200 rounded-xl p-6 mb-6 text-center hidden transition-all">
             <i class="fa-solid fa-trophy text-4xl text-amber-500 mb-2"></i>
             <h3 class="text-xl font-bold text-emerald-900">สรุปคะแนนสอบของคุณเบียร์</h3>
             <p id="scoreDisplay" class="text-4xl font-extrabold text-emerald-600 my-2">0 / 0</p>
@@ -88,10 +79,8 @@
         </div>
 
         <div id="quizContainer" class="space-y-6">
-            <!-- Questions dynamically generated here -->
-        </div>
+            </div>
 
-        <!-- 📥 Submit Button Area -->
         <div id="submitArea" class="mt-8 text-center hidden">
             <button id="btnSubmitExam" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold text-lg px-8 py-4 rounded-xl shadow-md hover:shadow-lg transition-all transform active:scale-95 w-full sm:w-64">
                 <i class="fa-solid fa-paper-plane mr-2"></i> ส่งข้อสอบและตรวจคะแนน
@@ -99,7 +88,6 @@
         </div>
     </main>
 
-    <!-- Edit Answer Modal -->
     <div id="editModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-lg overflow-hidden transform transition-all">
             <div class="bg-slate-900 text-white p-4 flex justify-between items-center">
@@ -119,8 +107,7 @@
                 <div>
                     <label class="block text-sm font-bold text-slate-700 mb-2">เลือกตัวเลือกที่ถูกต้องจริงๆ:</label>
                     <div id="modalChoicesContainer" class="space-y-2">
-                        <!-- Lock choices based on original structure -->
-                    </div>
+                        </div>
                 </div>
 
                 <div>
@@ -137,17 +124,15 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="bg-slate-800 text-slate-400 text-center py-4 border-t border-slate-700 text-xs mt-10">
         <p>© 2026 คลังข้อสอบวิชารังสีเทคนิค 2 • ยินดีต้อนรับคุณเบียร์ 🍺</p>
     </footer>
 
-    <!-- Firebase SDK (Compat Version 10) -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
     <script>
-        // Raw Data Core Object
+        // คลังข้อสอบวิชารังสีเทคนิค 2 หลัก
         const originalQuizData = [
             // ================== YEAR 2564 ==================
             { id: "64-1", year: "2564", q: "กลไกใดที่ต่อมไทรอยด์ใช้ในการดูดจับ I-131", choices: ["Receptor binding", "Absorption", "Phagocytosis", "Active transport", "Capillary blockage"], ans: 4 },
@@ -178,7 +163,7 @@
             { id: "64-26", year: "2564", q: "ซีเซียม 137 (Cs-137) มีค่าครึ่งชีวิตนานประมาณเท่าไร", choices: ["6 ชั่วโมง", "8 วัน", "5.26 ปี", "30 ปี", "74 วัน"], ans: 4 },
             { id: "64-27", year: "2564", q: "การถ่ายภาพเพื่อประเมินการทำงานของหัวใจห้องล่างซ้าย โดยการคำนวณค่า ejection fraction หัววัดของเครื่อง Gamma camera ต้องอยู่ในตำแหน่งใด", choices: ["RAO ในตำแหน่งที่หัวใจห้องล่างซ้ายและขวาแยกจากกันดีที่สุด", "RPO ในตำแหน่งที่หัวใจห้องล่างซ้ายและขวาแยกจากกันดีที่สุด", "LPO ในตำแหน่งที่หัวใจห้องล่างซ้ายและขวาแยกจากกันดีที่สุด", "LAO ในตำแหน่งที่หัวใจห้องล่างซ้ายและขวาแยกจากกันดีที่สุด", "Anterior ในตำแหน่งที่หัวใจห้องล่างซ้ายและขวาแยกจากกันดีที่สุด"], ans: 4 },
             { id: "64-28", year: "2564", q: "ส่วนที่ทำหน้าที่คัดเลือกสัญญาณในหัววัดแบบ Scintillation Detector System คือข้อใด", choices: ["High-voltage supply", "Pulse height analyzer", "Detector", "Amplifier", "Preamplifier"], ans: 2 },
-            { id: "64-29", year: "2564", q: "การเก็บค่าครึ่งชีวิตของสารรังสี หมายถึงข้อใด", choices: ["ระยะเวลาที่สารรังสีมีการสลายตัวจากธาตุหนึ่งไปเป็นอีกธาตุหนึ่ง", "ปริมาณรังสีที่ลดลงเหลือครึ่งหนึ่งของค่าปริมาณรังสีเริ่มต้น", "ระยะเวลาที่ปริมาณรังสีลดลงเหลือครึ่งหนึ่งของค่าปริมาณรังสีเริ่มต้น", "ปริมาณรังสีของธาตุตัวใหม่ที่ได้จากการสลายตัวของสารรังสีเริ่มต้น", "ไม่มีข้อใดถูก"], ans: 3 },
+            { id: "64-29", year: "2564", q: "ค่าครึ่งชีวิตของสารรังสี หมายถึงข้อใด", choices: ["ระยะเวลาที่สารรังสีมีการสลายตัวจากธาตุหนึ่งไปเป็นอีกธาตุหนึ่ง", "ปริมาณรังสีที่ลดลงเหลือครึ่งหนึ่งของค่าปริมาณรังสีเริ่มต้น", "ระยะเวลาที่ปริมาณรังสีลดลงเหลือครึ่งหนึ่งของค่าปริมาณรังสีเริ่มต้น", "ปริมาณรังสีของธาตุตัวใหม่ที่ได้จากการสลายตัวของสารรังสีเริ่มต้น", "ไม่มีข้อใดถูก"], ans: 3 },
             { id: "64-30", year: "2564", q: "เหตุใดต้องให้ผู้ป่วยหายใจเข้าลึกๆ ขณะฉีดสารเภสัชรังสีเพื่อตรวจ Lung Perfusion Scan", choices: ["สารเภสัชรังสีเข้าปอดได้เร็วยิ่งขึ้น", "ทำให้เห็น Pulmonary embolism ในปอดชัดเจนขึ้น", "ลดอาการเจ็บปวดขณะฉีด", "การกระจายตัวของสารเภสัชรังสีเป็นไปอย่างสม่ำเสมอ", "บริหารปอดผู้ป่วยก่อนการถ่ายภาพ"], ans: 4 },
             { id: "64-31", year: "2564", q: "ในการตรวจแบบ dynamic เช่น การตรวจ renogram ด้วย Tc-99m DTPA การตั้งโปรโตคอลในข้อใดเหมาะสมที่สุด", choices: ["High energy general purpose collimator, matrix size 256x256", "Low energy general purpose collimator, matrix size 128x128", "High energy general purpose collimator, matrix size 64x64", "Low energy high resolution collimator, matrix size 256x256", "Low energy general purpose collimator, matrix size 256x256"], ans: 2 },
             { id: "64-32", year: "2564", q: "ข้อใดเป็นความคลาดเคลื่อน (Uncertainty) ที่เกิดจากการทำงานของนักรังสีเทคนิค", choices: ["ความผิดพลาดจากการเคลื่อนที่ของอวัยวะภายในร่างกายผู้ป่วย", "ความผิดพลาดจากการบันทึกข้อมูลการจัดท่าผู้ป่วย", "ความผิดพลาดจากการวาดตำแหน่งอวัยวะของผู้ป่วย", "ความผิดพลาดจากการคำนวณปริมาณรังสีและเวลาฉายรังสีให้กับผู้ป่วย", "ความผิดพลาดจากกลไกภายในของเครื่องฉายรังสี"], ans: 2 },
@@ -198,7 +183,7 @@
             // ================== YEAR 2565 ==================
             { id: "65-1", year: "2565", q: "ทุกข้อต่อไปนี้เป็นสารเภสัชรังสีที่ใช้ในการตรวจการทำงานของไต ยกเว้น ข้อใด", choices: ["Tc-99m DMSA", "Tc-99m DTPA", "I-131 Hippuran", "Tc-99m DISIDA", "Tc-99m MAG3"], ans: 4 },
             { id: "65-2", year: "2565", q: "ข้อใด ไม่ใช่ ผลข้างเคียงที่เกิดจากการฉายรังสีในมะเร็งต่อมน้ำเหลืองบริเวณศีรษะและลำคอ", choices: ["Dermatitis", "Mucositis", "Xerostomia", "Hypothyroidism", "Anemia"], ans: 5 },
-            { id: "65-3", year: "2565", q: "ประโยชน์ของการใช้เทคนิค Full bladder ร่วมกับการฉายรังสีผู้ป่วยมะเร็งต่อมลูกหมาก ด้วยเทคนิค 3D-CRT และ IMRT คือ", choices: ["ป้องกันไม่ให้ผู้ป่วยปัสสาวะขณะผู้ป่วยเข้ารับการฉายรังสี", "ทำให้พื้นผิวของกระเพาะปัสสาวะอยู่ในบริเวณฉายรังสีมากที่สุด", "ทำให้พื้นผิวของกระเพาะปัสสาวะอยู่นอกบริเวณฉายรังสีมากที่สุด", "ทำให้ต่อมลูกหมากได้รับรังสีอย่างสม่ำเสมอ", "ลดผลกระทบจากตำแหน่งของต่อมลูกหมาก ซึ่งอาจจะคลาดเคลื่อนจากแผนการรักษา"], ans: 3 },
+            { id: "65-3", year: "2565", q: "ประโยชน์ของการใช้เทคนิค Full bladder ร่วมกับการฉายรังสีผู้ป่วยมะเรงต่อมลูกหมาก ด้วยเทคนิค 3D-CRT และ IMRT คือ", choices: ["ป้องกันไม่ให้ผู้ป่วยปัสสาวะขณะผู้ป่วยเข้ารับการฉายรังสี", "ทำให้พื้นผิวของกระเพาะปัสสาวะอยู่ในบริเวณฉายรังสีมากที่สุด", "ทำให้พื้นผิวของกระเพาะปัสสาวะอยู่นอกบริเวณฉายรังสีมากที่สุด", "ทำให้ต่อมลูกหมากได้รับรังสีอย่างสม่ำเสมอ", "ลดผลกระทบจากตำแหน่งของต่อมลูกหมาก ซึ่งอาจจะคลาดเคลื่อนจากแผนการรักษา"], ans: 3 },
             { id: "65-4", year: "2565", q: "ในการถ่ายภาพ PET การตรวจจับ Photon ที่มีพลังงาน 511 keV จำนวน 2 ตัว ซึ่งไม่ได้เกิดจากอันตรกิริยา Annihilation เดียวกันภายใน Coincidence timing window เรียกว่าอะไร", choices: ["True coincidence", "Scatter coincidence", "Total coincidence", "Prompt coincidence", "Random coincidence"], ans: 5 },
             { id: "65-5", year: "2565", q: "การควบคุมคุณภาพของสารเภสัชรังสีในข้อใดที่ควรทำประจำทุกวันก่อนการตรวจผู้ป่วย", choices: ["Toxicity test", "Aluminum contamination", "ถูกทุกข้อ", "Physical test", "Radiochemical purity"], ans: 5 },
             { id: "65-6", year: "2565", q: "สำหรับเครื่อง Gamma camera สัญญาณแสงที่เกิดจากผลึก NaI(Tl) จะเข้าสู่อุปกรณ์ใดต่อไปนี้", choices: ["Collimator", "Pre-amplifier", "Photomultiplier tube", "Amplifier", "Coincidence circuit"], ans: 3 },
@@ -211,7 +196,7 @@
             { id: "65-13", year: "2565", q: "Coincidence detection คือหลักการถ่ายภาพของเครื่องใด", choices: ["Gamma camera", "Thyroid uptake", "PET", "SPECT", "Scintimammography"], ans: 3 },
             { id: "65-14", year: "2565", q: "ผู้ป่วยมาเข้ารับการตรวจ Myocardial perfusion SPECT กำหนด Total angular range เป็น 180 องศา จะต้องถ่ายภาพในช่วงมุมใด", choices: ["Left lateral - Right lateral", "Anterior - Posterior", "LAO 45 degree - RPO 45 degree", "LAO 70 degree - RPO 70 degree", "RAO 45 degree - LPO 45 degree"], ans: 5 },
             { id: "65-15", year: "2565", q: "ข้อใดเป็น Routine technique ในการฉายรังสี Whole Brain Radiation Therapy (WBRT)", choices: ["Three-field with posterior and two opposing right and left lateral", "AP/PA two-opposing", "Three-field with anterior and two opposing right and left lateral", "Four-field box technique", "Right/Left two lateral opposing"], ans: 5 },
-            { id: "65-16", year: "2565", q: "การฉายรังสีทั่วร่างกายด้วยเทคนิค TBI (Total Body Irradiation) และ TSEI (Total Skin Electron Irradiation) ต่างกันอย่างไร", choices: ["Refผลข้างเคียงที่เกิดขึ้นภายหลังการฉายรังสี", "เครื่องฉายรังสี", "ค่าพลังงาน", "ชนิดของรังสี/พลังงาน", "การวัดปริมาณรังสี"], ans: 4 },
+            { id: "65-16", year: "2565", q: "การฉายรังสีทั่วร่างกายด้วยเทคนิค TBI (Total Body Irradiation) และ TSEI (Total Skin Electron Irradiation) ต่างกันอย่างไร", choices: ["ผลข้างเคียงที่เกิดขึ้นภายหลังการฉายรังสี", "เครื่องฉายรังสี", "ค่าพลังงาน", "ชนิดของรังสี/พลังงาน", "การวัดปริมาณรังสี"], ans: 4 },
             { id: "65-17", year: "2565", q: "ข้อใดคืออวัยวะเสี่ยง (Organ at risk: OAR) สำหรับการรักษามะเร็งปากมดลูกด้วยเทคนิค 3D Brachytherapy", choices: ["Uterus, Bladder, Rectum", "Rectum, Sigmoid colon, Uterus", "Sigmoid colon, Uterus, Small intestine", "Bladder, Sigmoid colon, Small intestine", "Bladder, Rectum, Sigmoid colon"], ans: 5 },
             { id: "65-18", year: "2565", q: "Temporary และ Permanent source ที่ใช้ในการรักษาด้วยรังสีระยะใกล้ (Brachytherapy) คือสารใดตามลำดับ", choices: ["Cs-137, Co-60", "Ir-192, Co-60", "Cs-137, Ir-192", "I-125, Pd-103", "Ir-192, I-125"], ans: 5 },
             { id: "65-19", year: "2565", q: "ผู้ป่วยที่ได้รับการรักษาด้วยไอโอดีน-131 ข้อใดที่ ไม่ต้อง ให้คำแนะนำแบบเข้มงวด เพื่อป้องกันอันตรายจากรังสีให้กับบุคคลในครอบครัวและบุคคลทั่วไป", choices: ["ผู้ป่วยมะเร็งไทรอยด์ที่ได้รับไอโอดีน-131 ระหว่าง 10 ถึง 30 mCi", "ผู้ป่วยที่คงเหลือสารไอโอดีน-131 ในร่างกายไม่เกิน 30 mCi", "ผู้ป่วยที่อาศัยอยู่บ้านคนเดียว", "ผู้ป่วยคอพอกเป็นพิษที่ได้รับไอโอดีน-131 น้อยกว่าหรือเท่ากับ 8 mCi", "ผู้ป่วยที่มีบุตรอายุมากกว่า 10 ปี"], ans: 3 },
@@ -224,7 +209,7 @@
             { id: "65-26", year: "2565", q: "ในการทำ Radionuclide Venogram ร่วมกับ Lung perfusion scan ควรใช้สารเภสัชรังสีชนิดใด", choices: ["Tc-99m DTPA", "Tc-99m MAA", "Tc-99m Sulfur colloid", "Tc-99m RBC", "Tc-99m Phytate"], ans: 2 },
             { id: "65-27", year: "2565", q: "เครื่อง CT Simulator ในงานรังสีรักษา แตกต่างจากเครื่อง CT ทั่วไปในรังสีวินิจฉัย ยกเว้น ข้อใด", choices: ["CT Simulator มี Moving Laser ทำให้สามารถกำหนดขอบเขตของพื้นที่ลำรังสีได้", "CT Simulator มีขนาดของ Aperture (bore) กว้างกว่า CT ทั่วไปในทางวินิจฉัย", "CT Simulator มีเตียงเป็นเตียงโค้งเพื่อให้ผู้ป่วยนอนในท่าที่สบายที่สุด", "CT Simulator มีการออกแบบให้สามารถใช้ร่วมกับอุปกรณ์ยึดตรึงผู้ป่วยได้", "CT Simulator มี Software Virtual Simulation"], ans: 2 },
             { id: "65-28", year: "2565", q: "การฉายรังสีผู้ป่วยมะเร็งเต้านมด้วยท่านอนคว่ำ (Prone position) เหมาะกับผู้ป่วยลักษณะใด", choices: ["ผู้ป่วยที่มีรูปร่างอ้วน มีเต้านมขนาดเล็กมากๆ", "ผู้ป่วยที่มีตำแหน่งก้อนมะเร็งอยู่ด้านบนติดกับ Chest wall", "ผู้ป่วยที่มีรูปร่างผอม ตัวเล็ก มีเต้านมขนาดเล็กและลักษณะย้อย", "ผู้ป่วยที่มีรูปร่างอ้วน มีเต้านมขนาดใหญ่และลักษณะย้อย", "ผู้ป่วยที่มีรูปร่างอ้วน ตัวใหญ่ มีเต้านมขนาดเล็กและลักษณะย้อย"], ans: 4 },
-            { id: "65-29", year: "2565", q: "หากท่านต้องการถ่ายภาพต่อมไทรอยด์ ให้ได้ภาพที่จะSpatial resolution ดีที่สุด ท่านควรทำอย่างไร", choices: ["เพิ่มเวลาในการถ่ายภาพให้นานขึ้น", "ลดระยะทางระหว่างผู้ป่วยกับหัววัดรังสีให้น้อยที่สุด", "เพิ่มปริมาณสารเภสัชรังสีที่ฉีดให้กับผู้ป่วย", "จัดให้ผู้ป่วยอยู่ตรงกลาง Field of view", "ตั้ง Matrix size ให้มีขนาดใหญ่ขึ้น"], ans: 2 },
+            { id: "65-29", year: "2565", q: "หากท่านต้องการถ่ายภาพต่อมไทรอยด์ ให้ได้ภาพที่มี Spatial resolution ดีที่สุด ท่านควรทำอย่างไร", choices: ["เพิ่มเวลาในการถ่ายภาพให้นานขึ้น", "ลดระยะทางระหว่างผู้ป่วยกับหัววัดรังสีให้น้อยที่สุด", "เพิ่มปริมาณสารเภสัชรังสีที่ฉีดให้กับผู้ป่วย", "จัดให้ผู้ป่วยอยู่ตรงกลาง Field of view", "ตั้ง Matrix size ให้มีขนาดใหญ่ขึ้น"], ans: 2 },
             { id: "65-30", year: "2565", q: "ปัจจุบันเครื่องสอดใส่สารกัมมันตรังสีแบบอัตราปริมาณรังสีสูง (HDR brachytherapy) นิยมใช้สารกัมมันตรังสีชนิดใด", choices: ["Ra-226", "Cs-137", "Ir-192", "Au-198", "I-125"], ans: 3 },
             { id: "65-31", year: "2565", q: "นิยมใช้เทคนิค 4-field box ในการรักษาผู้ป่วยมะเร็งบริเวณใด", choices: ["Chest", "Pelvis", "Extremities", "Head", "Head and neck"], ans: 2 },
             { id: "65-32", year: "2565", q: "ข้อใด ไม่ใช่ การควบคุมคุณภาพรายวัน (Daily QA) ตามบทบาทหน้าที่ของนักรังสีเทคนิคสำหรับเครื่องเร่งอนุภาคแบบเส้นตรง (LINAC)", choices: ["การตรวจสอบ Output constancy ของรังสีโฟตอน", "การตรวจสอบความถูกต้องของ Laser ที่ใช้ในการจัดท่าผู้ป่วย", "การตรวจสอบ Output constancy ของรังสีอิเล็กตรอน", "การตรวจสอบความถูกต้องของ Optical Distance Indicator (ODI)", "การตรวจสอบค่า Wedge transmission factor"], ans: 5 },
@@ -258,7 +243,7 @@
             { id: "66-14", year: "2566", q: "ข้อใดกล่าวถูกต้องเกี่ยวกับลำรังสีอนุภาค (Particle beam เช่น Proton therapy)", choices: ["มี Energy deposit ที่ Normal tissue น้อย", "เกิด Bragg peak เฉพาะที่ความลึก 2.5 เซนติเมตร จากผิวเท่านั้น", "ให้ Photon beam ได้เพียง 2 ค่าพลังงาน", "ค่า LET ต่ำกว่า Photon beam", "เกิด High dose ที่ Entrance area"], ans: 1 },
             { id: "66-15", year: "2566", q: "อวัยวะวิกฤตที่ต้องได้รับการกำบัง (Shielding critical organs) ในการให้รังสีเทคนิคฉายรังสีทั่วร่างกาย (Total Body Irradiation: TBI) คือข้อใด", choices: ["Eyes and Skin", "Nail and Eyes", "Brain stem and Spinal cord", "Lung and Kidney", "Ovarian and Small bowel"], ans: 4 },
             { id: "66-16", year: "2566", q: "ผู้ป่วยในข้อใดต่อไปนี้ ไม่ควร หรือต้องเลื่อนการตรวจความหนาแน่นของกระดูก (BMD) ออกไปก่อน", choices: ["ผู้ป่วยที่อยู่ระหว่างการให้นมบุตร", "ผู้ป่วยที่อยู่ระหว่างการได้รับตรวจฉายรังสีรักษา", "ผู้ป่วยที่เพิ่งได้รับสารเคมีบำบัด", "ผู้ป่วยที่เพิ่งได้รับการตรวจ Barium enema", "ผู้ป่วยที่อยู่ในวัยหมดประจำเดือน"], ans: 4 },
-            { id: "66-17", year: "2566", q: "หลักทั่วไปในการจัดการกากกัมมันตรังสี (Radioactive waste management) ของงานเวชศาสตร์นิวเคลียร์ ควรเก็บกากไว้เพื่อให้สลายตัวลดลงอย่างปลอดภัยอย่างน้อยกี่เท่าของค่าครึ่งชีวิต", choices: ["1 เท่า", "2.5 เท่า", "10 เท่า", "20 เท่า", "2 เท่า"], ans: 3 },
+            { id: "66-17", year: "2566", q: "หลักทั่วไปในการจัดการกากกัมมันตรังสี (Radioactive waste management) ของงานเวชศาสตร์นิวเคลียร์ ควรเก็บกักกากไว้เพื่อให้สลายตัวลดลงอย่างปลอดภัยอย่างน้อยกี่เท่าของค่าครึ่งชีวิต", choices: ["1 เท่า", "2.5 เท่า", "10 เท่า", "20 เท่า", "2 เท่า"], ans: 3 },
             { id: "66-18", year: "2566", q: "ข้อใด ไม่ใช่ วัตถุประสงค์หลักทางชีววิทยารังสีของการแบ่งฉายรังสีเป็นรอบย่อย (Fractionation)", choices: ["เพื่อลดผลข้างเคียงรุนแรงเฉียบพลันที่อาจเกิดขึ้นกับผู้ป่วยขณะฉายรังสี", "เพื่อเพิ่มปริมาณคนไข้ในห้องฉายให้ได้รับจำนวนรอบที่มากขึ้นในแต่ละวัน", "เพื่อเปิดโอกาสให้มีการฟื้นตัวของเซลล์ปกติ (Repair) ที่อยู่รอบๆ เซลล์มะเร็ง", "เพื่อเพิ่มประสิทธิภาพสูงสุดในการทำลายเซลล์มะเร็ง (Reoxygenation / Redistribution)", "เพื่อลดอัตราการทำลายเนื้อเยื่อปกติหรือเนื้อเยื่อเกี่ยวพันโดยรอบไม่ให้เกิดผลข้างเคียงระยะยาว"], ans: 2 },
             { id: "66-19", year: "2566", q: "ข้อใดเป็นสิ่งจำเป็นในกระบวนการวางแผนและฉายรังสีแบบ Non-coplanar beam จากเครื่องเร่งอนุภาค LINAC", choices: ["ให้ลำรังสีวิ่งเข้าหาเป้าหมายอย่างน้อย 3-5 ทิศทางในแนวระนาบ", "แกนกลางลำรังสีต้องไม่ตัดผ่านจุดศูนย์กลางเดียวกัน", "อนุญาตให้ใช้รักษาได้เฉพาะกับมะเร็งบริเวณศีรษะเท่านั้น", "มีการบิดหมุนองศาเตียงผู้ป่วย (Couch rotation) ร่วมกับการหมุนหัวเครื่อง (Gantry angulation)", "ลำรังสีทุกทิศทางต้องฉายอยู่ในระนาบเดียวกันทั้งหมด"], ans: 4 },
             { id: "66-20", year: "2566", q: "ข้อใดคืออุปกรณ์จัดแต่งลำรังสี (Beam modifier) ที่ทำหน้าที่ทำลายคุณสมบัติ Skin sparing หรือทำหน้าที่เป็น Build-up zone สำหรับผิวหนังในผู้ป่วยมะเร็งเต้านม (CA breast)", choices: ["Compensator", "MLC (Multileaf Collimator)", "Bolus", "Customized block", "Wedge filter"], ans: 3 },
@@ -272,7 +257,7 @@
             { id: "66-28", year: "2566", q: "ผู้ป่วยชายอายุ 68 ปี แพทย์สงสัยว่ามีภาวะลิ่มเลือดอุดกั้นในหลอดเลือดปอด (Pulmonary embolism) จึงส่งตรวจทางเวชศาสตร์นิวเคลียร์ (Lung Scan) ลำดับการวางโปรโตคอลที่เหมาะสมคือข้อใด", choices: ["ตรวจ Lung Ventilation ก่อน หากพบว่าปอดปกติ ไม่จำเป็นต้องตรวจ Lung Perfusion ต่อ", "ตรวจ Lung Ventilation แล้วเว้นระยะเวลา 2 วัน จึงทำการตรวจ Lung Perfusion", "ตรวจ Lung Ventilation เสร็จสิ้นแล้วต่อด้วยขั้นตอนการตรวจ Lung Perfusion ทันที", "ตรวจ Lung Perfusion แล้วเว้นระยะเวลา 2 วัน จึงทำการตรวจ Lung Ventilation", "ตรวจ Lung Ventilation หากพบว่าภาพปอดมีความผิดปกติ ไม่จำเป็นต้องตรวจ Lung Perfusion ต่อ"], ans: 3 },
             { id: "66-29", year: "2566", q: "ข้อใดคือเครื่องมือและอุปกรณ์ทางรังสีรักษาที่ใช้ \"ต้นกำเนิดรังสีจากสารกัมมันตรังสีปิดผนึก (Sealed Radioactive Source)\" ในการรักษาโรคมะเร็ง", choices: ["Tomotherapy", "Cobalt-60 unit", "CT simulator", "CyberKnife", "Linear accelerator (LINAC)"], ans: 2 },
             { id: "66-30", year: "2566", q: "ท่ามาตรฐาน (Standard views) ที่ใช้ในการถ่ายภาพเพื่อประเมินระบบไหลเวียนโลหิตในปอด (Lung perfusion scan) คือข้อใด", choices: ["ท่า Anterior และการทำ SPECT", "ท่า Anterior, Posterior, Lateral (Left/Right) และ Oblique (LPO/RPO/LAO/RAO)", "ท่า Anterior, Posterior, Lateral และการทำ SPECT", "ท่า Anterior และ Posterior เท่านั้น", "ท่า Posterior และ Oblique เท่านั้น"], ans: 2 },
-            { id: "66-31", year: "2566", q: "ข้อใดเป็นความคลาดเคลื่อน (Uncertainty) ที่เกิดจากการทำงานของนักรังสีเทคนิค", choices: ["ความผิดพลาดเชิงกลและกลไกภายในระบบเครื่องฉายรังสี", "ความผิดพลาดจากการบันทึกและส่งต่อข้อมูลการจัดท่าผู้ป่วย (Setup documentation error)", "ความผิดพลาดจากการเคลื่อนที่ของอวัยวะภายในตามระบบสรีรวิทยาของตัวผู้ป่วยเอง", "ความผิดพลาดเชิงระบบจากการคํานวณปริมาณรังสีในซอฟต์แวร์วางแผน", "ความผิดพลาดจากการวาดหรือกําหนดขอบเขตอวัยวะโดยแพทย์ผู้รักษา"], ans: 2 },
+            { id: "66-31", year: "2566", q: "ข้อใดจัดเป็นความคลาดเคลื่อน (Uncertainty) ที่เกิดขึ้นโดยตรงจากกระบวนการและทักษะการปฏิบัติงานของนักรังสีเทคนิค (Radiographer error)", choices: ["ความผิดพลาดเชิงกลและกลไกภายในระบบเครื่องฉายรังสี", "ความผิดพลาดจากการบันทึกและส่งต่อข้อมูลการจัดท่าผู้ป่วย (Setup documentation error)", "ความผิดพลาดจากการเคลื่อนที่ของอวัยวะภายในตามระบบสรีรวิทยาของตัวผู้ป่วยเอง", "ความผิดพลาดเชิงระบบจากการคํานวณปริมาณรังสีในซอฟต์แวร์วางแผน", "ความผิดพลาดจากการวาดหรือกําหนดขอบเขตอวัยวะโดยแพทย์ผู้รักษา"], ans: 2 },
             { id: "66-32", year: "2566", q: "หน้าที่และกลไกหลักของหลอดทวีคูณภาพแสง (Photomultiplier tube หรือ PM tube) ในระบบหัววัดรังสีคือข้อใด", choices: ["เปลี่ยนพลังงานของโฟตอนรังสีแกมมาที่เข้ามาทำปฏิกิริยาให้เป็นโฟตอนแสงเรือง", "เปลี่ยนโฟตอนแสงเรืองที่ได้รับจากผลึก Scintillator ให้เป็นสัญญาณอิเล็กตรอนและทวีคูณสัญญาณไฟฟ้าให้แรงขึ้น", "คัดเลือกช่วงระดับสัญญาณพลังงานไฟฟ้าที่จะนับวัด (Pulse Height Analyzer)", "ขยายขนาดสัญญาณไฟฟ้าแอนาล็อกรวมก่อนเข้าสู่ระบบประมวลผล", "ปรับเปลี่ยนรูปร่างหน้าตาและลักษณะทางเวลาของสัญญาณไฟฟ้า"], ans: 2 },
             { id: "66-33", year: "2566", q: "ข้อใดต่อไปนี้จัดเป็นรายการตรวจสอบคุณภาพประจำวัน (Daily QA checklist) สำหรับเครื่องเร่งอนุภาคแบบเส้นตรง (LINAC) ที่นักรังสีเทคนิคต้องทดสอบก่อนเปิดให้บริการ", choices: ["Treatment couch position indicators", "Wedge placement accuracy", "Jaw position indicators", "Laser localization", "Gantry angle indicators"], ans: 4 },
             { id: "66-34", year: "2566", q: "ประโยชน์หลักของการเปิดใช้โหมดให้ Detector ของเครื่อง SPECT เคลื่อนที่หมุนรอบตัวผู้ป่วยแบบตามสรีรวิทยา (Body contouring orbit หรือ Non-circular orbit) คือข้อใด", choices: ["ทำให้ระยะห่างลดลง ส่งผลให้ภาพมี Spatial resolution ดีขึ้นอย่างชัดเจน", "ลดปริมาณและสัดส่วนของสัญญาณรบกวน (Noise)", "ทำให้การเก็บข้อมูลภาพฉาย (Sinogram) สามารถทำได้รวดเร็วขึ้น", "ช่วยขจัดและลดการเกิด Star artifact ในขั้นตอน Backprojection", "ลดเวลาในการคำนวณและเก็บข้อมูลดิบของภาพรวมให้น้อยลง"], ans: 1 },
@@ -305,13 +290,14 @@
         // FIREBASE INITIALIZATION CONFIGURATION
         // ==========================================
         const firebaseConfig = {
-            apiKey: "",
-            authDomain: "",
-            databaseURL: "",
-            projectId: "",
-            storageBucket: "",
-            messagingSenderId: "",
-            appId: ""
+            apiKey: "AIzaSyBu8iYvplizZbFepIEvZ3lvBCag_UB2oT0",
+            authDomain: "ansr1-541e8.firebaseapp.com",
+            databaseURL: "https://ansr1-541e8-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "ansr1-541e8",
+            storageBucket: "ansr1-541e8.firebasestorage.app",
+            messagingSenderId: "721916459807",
+            appId: "1:721916459807:web:0fade339a3c5213f8d469a",
+            measurementId: "G-9YRQH19NMN"
         };
 
         let db = null;
@@ -355,8 +341,10 @@
             document.getElementById('btnExamMode').addEventListener('click', toggleExamMode);
             document.getElementById('btnSubmitExam').addEventListener('click', submitExam);
 
-function filterAndRender() {
-            // มั่นใจว่าดึงข้อมูลปีมาเทียบค่าได้ถูกต้อง
+            filterAndRender();
+        }
+
+        function filterAndRender() {
             let filtered = originalQuizData.filter(item => item.year === selectedFilter);
             currentQuizData = JSON.parse(JSON.stringify(filtered));
 
@@ -374,11 +362,31 @@ function filterAndRender() {
             renderQuiz();
         }
 
-        // แก้ไขฟังก์ชันโครงสร้างจับเวลาตรงนี้ครับคุณเบียร์
-      // ✅ ฟังก์ชันควบคุมโหมดจับเวลาสอบที่ถูกต้องและสมบูรณ์แบบที่สุดครับคุณเบียร์
+        function randomizeCurrentData() {
+            for (let i = currentQuizData.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [currentQuizData[i], currentQuizData[j]] = [currentQuizData[j], currentQuizData[i]];
+            }
+
+            currentQuizData.forEach(item => {
+                let choiceObjects = item.choices.map((c, index) => {
+                    return { text: c, isCorrect: (index + 1) === item.ans };
+                });
+
+                for (let i = choiceObjects.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [choiceObjects[i], choiceObjects[j]] = [choiceObjects[j], choiceObjects[i]];
+                }
+
+                item.choices = choiceObjects.map(obj => obj.text);
+                item.ans = choiceObjects.findIndex(obj => obj.isCorrect) + 1;
+            });
+        }
+
+        // ⏳ เปิด-ปิดโหมดฝึกทำข้อสอบจับเวลา
         function toggleExamMode() {
             if (!isExamMode) {
-                // ดึงข้อมูลมากรองให้มั่นใจก่อนเริ่มสับเวลาเพื่อป้องกันข้อสอบหาย
+                // โหลดและซิงค์ข้อมูลให้พร้อมก่อนเพื่อไม่ให้ข้อสอบหาย
                 let filtered = originalQuizData.filter(item => item.year === selectedFilter);
                 currentQuizData = JSON.parse(JSON.stringify(filtered));
                 
@@ -405,7 +413,7 @@ function filterAndRender() {
                     document.getElementById('btnExamMode').className = "bg-slate-700 hover:bg-slate-800 text-white px-4 py-1.5 rounded-lg text-sm font-medium transition duration-200 flex items-center gap-2 shadow-sm";
                     document.getElementById('infoText').innerHTML = `<i class="fa-solid fa-stopwatch text-rose-500 mr-1"></i> โหมดจับเวลา: ตัวเลือกจะไฮไลต์เป็นสีฟ้าอ่อนเพื่อล็อกคำตอบ และจะเปิดแถบเฉลยตรวจทานคำตอบทั้งหมดพร้อมกันหลังกดส่งข้อสอบครับ`;
 
-                    remainingTime = currentQuizData.length * 60; // คำนวณเวลาสัมพันธ์กับข้อสอบจริง
+                    remainingTime = currentQuizData.length * 60; // 60 วินาทีต่อข้อ
                     updateClock();
 
                     clearInterval(examTimer);
@@ -419,7 +427,7 @@ function filterAndRender() {
                         }
                     }, 1000);
 
-                    renderQuiz(); // วาดข้อสอบขึ้นหน้าจอทันที ไม่หายแน่นอนครับ
+                    renderQuestions(); // ✨ แก้จาก renderQuiz(); เป็น renderQuestions();
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             } else {
@@ -428,6 +436,26 @@ function filterAndRender() {
                 }
             }
         }
+
+        function processScore() {
+            clearInterval(examTimer);
+            isExamSubmitted = true;
+            document.getElementById('submitArea').classList.add('hidden');
+
+            let totalCorrect = 0;
+            currentQuizData.forEach(item => {
+                if (userAnswers[item.id] !== undefined && userAnswers[item.id] === item.ans) {
+                    totalCorrect++;
+                }
+            });
+
+            document.getElementById('scoreDisplay').innerText = `${totalCorrect} / ${currentQuizData.length}`;
+            document.getElementById('resultCard').classList.remove('hidden');
+
+            renderQuestions(); // ✨ แก้จาก renderQuiz(); เป็น renderQuestions();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         function updateClock() {
             const min = Math.floor(remainingTime / 60);
             const sec = remainingTime % 60;
@@ -548,14 +576,12 @@ function filterAndRender() {
                     choiceBtn.className = "w-full text-left px-4 py-2.5 rounded-lg border text-sm font-medium transition duration-150 flex items-start gap-3 focus:outline-none ";
                     
                     if (isExamMode && !isExamSubmitted) {
-                        // 🌟 ในระหว่างทำโหมดสอบจับเวลา: ไฮไลต์สีฟ้าอ่อนปุ่มที่กดเลือก และย้ายสลับช้อยส์ได้ตลอด
                         if (choiceNum === selectedAns) {
                             choiceBtn.className += "border-blue-500 bg-blue-50 text-blue-900 font-semibold ring-1 ring-blue-500";
                         } else {
                             choiceBtn.className += "border-slate-200 bg-white text-slate-700 hover:bg-slate-50";
                         }
                     } else {
-                        // โหมดปกติ หรือ โหมดสอบที่กดส่งคำตอบและตรวจกระดาษคำตอบเสร็จแล้ว
                         if (selectedAns !== undefined) {
                             if (choiceNum === item.ans) {
                                 choiceBtn.className += "border-emerald-500 bg-emerald-50 text-emerald-900 ring-1 ring-emerald-500 font-semibold";
@@ -569,7 +595,6 @@ function filterAndRender() {
                         }
                     }
 
-                    // ปรับสีดัชนีตัวเลขหน้าข้อสอบ
                     let badgeNumberStyle = "bg-slate-100 text-slate-600";
                     if (isExamMode && !isExamSubmitted) {
                         if (choiceNum === selectedAns) badgeNumberStyle = "bg-blue-500 text-white";
@@ -587,14 +612,13 @@ function filterAndRender() {
                     `;
 
                     choiceBtn.onclick = () => {
-                        if (isExamSubmitted) return; // ล็อกห้ามกดเมื่อส่งตรวจกระดาษสอบแล้ว
+                        if (isExamSubmitted) return; 
                         userAnswers[item.id] = choiceNum;
                         renderQuiz();
                     };
                     choicesGroup.appendChild(choiceBtn);
                 });
 
-                // แสดงกล่องข้อความสีฟ้าเฉลยคำตอบ
                 if ((!isExamMode && selectedAns !== undefined) || (isExamMode && isExamSubmitted)) {
                     const explanationSpace = document.getElementById(`explanation-space-${item.id}`);
                     explanationSpace.innerHTML = `
